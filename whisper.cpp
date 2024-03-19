@@ -2055,10 +2055,13 @@ static bool whisper_encode_internal(
                 return false;
             }
         } else {
-#if defined(WHISPER_USE_COREML)
+//#if defined(WHISPER_USE_COREML)
+#ifdef WHISPER_USE_COREML
             whisper_coreml_encode(wstate.ctx_coreml, mel->ne[0], mel->ne[1], (float *) mel->data, (float *) wstate.embd_enc->data);
-#elif defined(WHISPER_USE_OPENVINO)
+#else
+    #ifdef WHISPER_USE_OPENVINO
             whisper_openvino_encode(wstate.ctx_openvino, mel, wstate.embd_enc);
+    #endif
 #endif
         }
     }
